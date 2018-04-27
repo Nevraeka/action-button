@@ -2,7 +2,7 @@ if (typeof polyfillDOM !== 'function') {
   function polyfillDOM(method, url) {
     return new Promise(function (resolve, reject) {
       let xhr = new XMLHttpRequest();
-      xhr.open('GET', 'https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/1.2.0/webcomponents-sd-ce.js');
+      xhr.open('GET', 'https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/1.2.0/webcomponents-lite.js');
       xhr.onload = function () {
         if (this.status >= 200 && this.status < 300) {
           resolve(xhr.response);
@@ -25,6 +25,7 @@ if (typeof polyfillDOM !== 'function') {
 }
 
 polyfillDOM().then(() => {
+
   class ActionButton extends HTMLElement {
 
     static get observedAttributes() { return ['disabled', 'size', 'theme']; }
@@ -293,7 +294,9 @@ polyfillDOM().then(() => {
     }
 
   }
-  if (!(!!customElements.get('action-button'))) {
-    customElements.define('action-button', ActionButton);
-  }
+  window.addEventListener('WebComponentsReady', function() {
+    if (!(!!customElements.get('action-button'))) {
+      customElements.define('action-button', ActionButton);
+    }
+  });
 });
