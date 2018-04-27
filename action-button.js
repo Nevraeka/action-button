@@ -1,53 +1,56 @@
 (function(document, window){
+
   if(!document.getElementById('#wc-polyfill')){
-  const script = document.createElement('script');
+    const script = document.createElement('script');
+    script.id = 'wc-polyfill';
+    script.src = 'https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/1.2.0/webcomponents-sd-ce.js';
+    document.head.appendChild(script);
+  }
 
-  script.id = 'wc-polyfill';
-  script.src = 'https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/1.2.0/webcomponents-sd-ce.js';
-  document.head.appendChild(script);
-}
-function loadActionButton() {
-  if (!window.customElements) {
-    setTimeout(loadActionButton,0);
-  } else {
+  function loadActionButton() {
+    if (!window.customElements) {
+      setTimeout(loadActionButton,0);
+    } else {
 
-    class ActionButton extends HTMLElement {
+      class ActionButton extends HTMLElement {
 
-      static get observedAttributes() { return ['disabled', 'size', 'theme']; }
+        static get observedAttributes() { return ['disabled', 'size', 'theme']; }
 
-      constructor() {
-        super();
-        this._root = null;
-        this._state = {
-          size: 'large',
-          theme: 'primary',
-          disabled: false
-        };
-      }
-
-      connectedCallback() {
-        if (this._root === null) {
-          if (!!this.attachShadow) {
-            this._root = this.attachShadow({ mode: "open" });
-          } else {
-            this._root = this;
-          }
+        constructor() {
+          super();
+          this._root = null;
+          this._state = {
+            size: 'large',
+            theme: 'primary',
+            disabled: false
+          };
         }
-        this._render();
+
+        connectedCallback() {
+          if (this._root === null) {
+            if (!!this.attachShadow) {
+              this._root = this.attachShadow({ mode: "open" });
+            } else {
+              this._root = this;
+            }
+          }
+          actionButtonRender.bind(this)();
+        }
+
+        attributeChangedCallback(name, oldValue, newValue) {
+          if (newValue === oldValue) { return };
+          if (name === 'size') { this._state.size = newValue; }
+          if (name === 'disabled') { this._state.disabled = !!newValue }
+          if (name === 'theme') { this._state.theme = newValue; }
+          actionButtonRender.bind(this)();
+        }
+
+        get size() { return this._state.size; }
+        get theme() { return this._state.theme; }
+
       }
 
-      attributeChangedCallback(name, oldValue, newValue) {
-        if (newValue === oldValue) { return };
-        if (name === 'size') { this._state.size = newValue; }
-        if (name === 'disabled') { this._state.disabled = !!newValue }
-        if (name === 'theme') { this._state.theme = newValue; }
-        this._render();
-      }
-
-      get size() { return this._state.size; }
-      get theme() { return this._state.theme; }
-
-      _render() {
+      function actionButtonRender() {
 
         if (!!this._root) {
           let $template = document.createElement("template");
@@ -278,12 +281,11 @@ function loadActionButton() {
         }
       }
 
-    }
-    if (!(!!window.customElements.get('action-button'))) {
-      window.customElements.define('action-button', ActionButton);
+      if (!(!!window.customElements.get('action-button'))) {
+        window.customElements.define('action-button', ActionButton);
+      }
     }
   }
-}
 
-loadActionButton();
+  loadActionButton();
 })(document, window);
