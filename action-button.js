@@ -1,6 +1,7 @@
 (function(document, window){
   if(!document.getElementById('#wc-polyfill')){
   const script = document.createElement('script');
+
   script.id = 'wc-polyfill';
   script.src = 'https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/1.2.0/webcomponents-sd-ce.js';
   document.head.appendChild(script);
