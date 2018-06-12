@@ -61,9 +61,11 @@
                 overflow: hidden;
                 display: inline-block;
                 outline-color: rgba(255,255,255,0);
+                min-width: 80px;
               }
 
               .input-button {
+                min-width: inherit;
                 -webkit-user-select: none;
                 user-select: none;
                 --webkit-appearance: none;
@@ -250,12 +252,10 @@
               }
 
               .small {
-                min-width: 60px;
                 padding: 11px 16px;
               }
 
               .large {
-                min-width: 80px;
                 line-height: 19px;
                 padding: 15px 16px;
               }
