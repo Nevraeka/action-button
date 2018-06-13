@@ -61,7 +61,7 @@
                 overflow: hidden;
                 display: inline-block;
                 outline-color: rgba(255,255,255,0);
-                min-width: 80px;
+                width: 100%;
               }
 
               .input-button {
@@ -74,7 +74,7 @@
                 border-radius: 4px;
                 cursor: pointer;
                 max-width: 100%;
-                width: auto;
+                width: inherit;
                 font: normal normal 500 1rem/1 Roboto, Helvetica, Arial, sans-serif;
                 text-align: center;
                 text-transform: capitalize;
@@ -252,10 +252,12 @@
               }
 
               .small {
+                min-width: 60px;
                 padding: 11px 16px;
               }
 
               .large {
+                min-width: 80px;
                 line-height: 19px;
                 padding: 15px 16px;
               }
@@ -269,7 +271,7 @@
 
               @media screen and (min-width: 580px) {
                 .small {
-                  width: auto;
+                  width: inherit;
                 }
               }
             </style>
