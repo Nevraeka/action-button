@@ -61,7 +61,7 @@
                 overflow: hidden;
                 display: inline-block;
                 outline-color: rgba(255,255,255,0);
-                width: 100%;
+                width: inherit;
               }
 
               .input-button {
